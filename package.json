@@ -4,6 +4,7 @@
   "description": "A gamified VS Code theme extension that evolves from Froakie to Greninja as you code.",
   "version": "0.1.0",
   "publisher": "starter-dev",
+  "icon": "assets/icons/logo.svg",
   "engines": {
     "vscode": "^1.75.0"
   },
