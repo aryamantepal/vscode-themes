@@ -6,6 +6,7 @@ import { forceEvolution } from './commands/evolve';
 import { resetProgress } from './commands/resetProgress';
 import { initStatusBar, disposeStatusBar } from './ui/statusBar';
 import { initTracker, deactivateTracker } from './progression/tracker';
+import { CompanionViewProvider } from './ui/companionView';
 
 /**
  * Main activation function for the Starter.dev VS Code Extension.
@@ -50,12 +51,20 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  // Add commands to subscriptions so they clean up when deactivated
+  // 4. Register Companion View Provider
+  const companionProvider = new CompanionViewProvider(state, context.extensionUri);
+  const companionViewReg = vscode.window.registerWebviewViewProvider(
+    CompanionViewProvider.viewType,
+    companionProvider
+  );
+
+  // Add commands and views to subscriptions so they clean up when deactivated
   context.subscriptions.push(
     chooseStarterCmd,
     showProgressCmd,
     forceEvolutionCmd,
-    resetProgressCmd
+    resetProgressCmd,
+    companionViewReg
   );
 }
 

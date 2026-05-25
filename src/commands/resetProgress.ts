@@ -29,6 +29,10 @@ export async function resetProgress(state: ExtensionState): Promise<void> {
   // Hide status bar
   updateStatusBar(state);
 
+  // Update companion view
+  const { getCompanionProvider } = require('../ui/companionView');
+  getCompanionProvider()?.update();
+
   vscode.window.showInformationMessage(
     '🔄 Starter.dev: Progress has been reset. Your original theme has been restored.'
   );

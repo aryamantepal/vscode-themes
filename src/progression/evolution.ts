@@ -36,4 +36,8 @@ export async function addXp(amount: number, state: ExtensionState): Promise<void
 
   // Update Status Bar
   updateStatusBar(state);
+
+  // Update Companion View
+  const { getCompanionProvider } = require('../ui/companionView');
+  getCompanionProvider()?.update();
 }

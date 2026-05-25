@@ -69,6 +69,10 @@ export async function chooseStarter(state: ExtensionState): Promise<void> {
   // Initialize status bar
   initStatusBar(state);
 
+  // Update companion view
+  const { getCompanionProvider } = require('../ui/companionView');
+  getCompanionProvider()?.update();
+
   vscode.window.showInformationMessage(
     `💧 You chose ${selection.label}! Let the coding adventures begin. Watch your status bar and code to gain XP!`
   );

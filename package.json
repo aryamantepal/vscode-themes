@@ -54,7 +54,25 @@
         "command": "starter-dev.resetProgress",
         "title": "Starter.dev: Reset Progress"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "starter-dev-sidebar",
+          "title": "Starter.dev",
+          "icon": "assets/icons/logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "starter-dev-sidebar": [
+        {
+          "type": "webview",
+          "id": "starter-dev.companion",
+          "name": "Companion"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
