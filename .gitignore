@@ -1,1 +1,5 @@
 .antigravitycli
+node_modules
+out/
+.VSCodeCounter/
+*.vsix

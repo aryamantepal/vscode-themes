@@ -1,0 +1,68 @@
+{
+  "name": "starter-dev",
+  "displayName": "Starter.dev",
+  "description": "A gamified VS Code theme extension that evolves from Froakie to Greninja as you code.",
+  "version": "0.1.0",
+  "publisher": "starter-dev",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Themes",
+    "Other"
+  ],
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "themes": [
+      {
+        "id": "Froakie Theme",
+        "label": "Froakie Theme",
+        "uiTheme": "vs",
+        "path": "./themes/froakie-color-theme.json"
+      },
+      {
+        "id": "Frogadier Theme",
+        "label": "Frogadier Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/frogadier-color-theme.json"
+      },
+      {
+        "id": "Greninja Theme",
+        "label": "Greninja Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/greninja-color-theme.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "starter-dev.chooseStarter",
+        "title": "Starter.dev: Choose Starter"
+      },
+      {
+        "command": "starter-dev.showProgress",
+        "title": "Starter.dev: Show Progress"
+      },
+      {
+        "command": "starter-dev.forceEvolution",
+        "title": "Starter.dev: Force Evolution (Dev/Test)"
+      },
+      {
+        "command": "starter-dev.resetProgress",
+        "title": "Starter.dev: Reset Progress"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@types/vscode": "^1.75.0",
+    "typescript": "^4.9.5"
+  }
+}
