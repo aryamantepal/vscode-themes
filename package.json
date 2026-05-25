@@ -35,6 +35,12 @@
         "label": "Greninja Theme",
         "uiTheme": "vs-dark",
         "path": "./themes/greninja-color-theme.json"
+      },
+      {
+        "id": "Batman Beyond",
+        "label": "Batman Beyond",
+        "uiTheme": "vs-dark",
+        "path": "./themes/batman-beyond-color-theme.json"
       }
     ],
     "commands": [

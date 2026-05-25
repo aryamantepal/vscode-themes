@@ -3,16 +3,13 @@ import { getStageFromXp, getStageInfo } from './xp';
 import { switchTheme } from '../commands/switchTheme';
 import { updateStatusBar } from '../ui/statusBar';
 import { showEvolutionNotification } from '../ui/notifications';
+import { triggerDancePopup, updateGutterDecoration } from '../ui/overlaySprite';
 
-/**
- * Adds XP to the user's progress and handles evolution if thresholds are crossed.
- */
+const XP_DANCE_MILESTONES = new Set([10, 25, 50, 75]);
+
 export async function addXp(amount: number, state: ExtensionState): Promise<void> {
   const starter = state.getStarter();
-  // Do not track XP if no starter is chosen
-  if (!starter) {
-    return;
-  }
+  if (!starter) return;
 
   const currentXp = state.getXp();
   const nextXp = currentXp + amount;
@@ -21,23 +18,30 @@ export async function addXp(amount: number, state: ExtensionState): Promise<void
   const currentStage = state.getStage();
   const nextStage = getStageFromXp(nextXp);
 
-  // If evolution threshold is crossed
   if (nextStage > currentStage) {
     await state.setStage(nextStage);
     const oldInfo = getStageInfo(currentStage);
     const newInfo = getStageInfo(nextStage);
 
-    // Apply the new theme automatically
     await switchTheme(newInfo.themeName);
-
-    // Show high-polish evolution notification
     showEvolutionNotification(oldInfo.name, newInfo.name);
+
+    // Trigger evolution flash animation in companion
+    const { getCompanionProvider } = require('../ui/companionView');
+    getCompanionProvider()?.triggerEvolution?.();
   }
 
-  // Update Status Bar
   updateStatusBar(state);
 
-  // Update Companion View
   const { getCompanionProvider } = require('../ui/companionView');
   getCompanionProvider()?.update();
+
+  // Update gutter sprite for new stage
+  updateGutterDecoration(state);
+
+  // Dance on milestone XP amounts (e.g. first commit, 30-min session)
+  if (XP_DANCE_MILESTONES.has(nextXp) || amount >= 25) {
+    triggerDancePopup(state);
+    getCompanionProvider()?.triggerDance?.();
+  }
 }
