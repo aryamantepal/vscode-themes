@@ -85,7 +85,10 @@ export class CompanionViewProvider implements vscode.WebviewViewProvider {
       progressText = `${xp}/${next} XP`;
     }
 
-    const pokemonSvg = this._getPokemonSvg(stage);
+    const spriteNames = ['froakie', 'frogadier', 'greninja'];
+    const spriteUri = this._view!.webview.asWebviewUri(
+      vscode.Uri.joinPath(this._extensionUri, 'assets', 'sprites', `${spriteNames[stage]}.png`)
+    );
     const themeAccent = stage === 0 ? '#38bdf8' : stage === 1 ? '#0284c7' : '#ff007f';
     const glowColor = stage === 0 ? '56,189,248' : stage === 1 ? '2,132,199' : '255,0,127';
 
@@ -473,7 +476,7 @@ export class CompanionViewProvider implements vscode.WebviewViewProvider {
 
       <div class="avatar-ring" id="avatarRing" title="Tap to dance!">
         <div class="pokemon-wrapper" id="pokemonWrapper">
-          ${pokemonSvg}
+          <img src="${spriteUri}" alt="${info.name}" style="image-rendering: pixelated; width: 100%; height: 100%; object-fit: contain;" />
         </div>
       </div>
       <div class="tap-hint">tap to dance</div>
@@ -616,206 +619,4 @@ export class CompanionViewProvider implements vscode.WebviewViewProvider {
 </html>`;
   }
 
-  private _getPokemonSvg(stage: number): string {
-    if (stage === 0) {
-      // Froakie — bubbly, cute, sky-blue
-      return `<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="bodyGrad0" cx="40%" cy="35%" r="60%">
-            <stop offset="0%" stop-color="#7dd3fc"/>
-            <stop offset="100%" stop-color="#0284c7"/>
-          </radialGradient>
-          <radialGradient id="eyeGrad0" cx="35%" cy="30%" r="60%">
-            <stop offset="0%" stop-color="#fde68a"/>
-            <stop offset="100%" stop-color="#d97706"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Shadow -->
-        <ellipse cx="50" cy="94" rx="20" ry="4" fill="#000" opacity="0.15"/>
-
-        <!-- Bubble frill back layer -->
-        <circle cx="28" cy="72" r="13" fill="#e0f2fe" opacity="0.9"/>
-        <circle cx="72" cy="72" r="13" fill="#e0f2fe" opacity="0.9"/>
-        <circle cx="50" cy="80" r="15" fill="#e0f2fe" opacity="0.9"/>
-        <circle cx="38" cy="78" r="10" fill="#f0f9ff"/>
-        <circle cx="62" cy="78" r="10" fill="#f0f9ff"/>
-
-        <!-- Main body -->
-        <ellipse cx="50" cy="55" rx="26" ry="24" fill="url(#bodyGrad0)" stroke="#0369a1" stroke-width="1.5"/>
-
-        <!-- Belly -->
-        <ellipse cx="50" cy="60" rx="14" ry="11" fill="#bfdbfe" opacity="0.6"/>
-
-        <!-- Arms -->
-        <ellipse cx="25" cy="62" rx="7" ry="5" fill="#38bdf8" stroke="#0369a1" stroke-width="1" transform="rotate(-20 25 62)"/>
-        <ellipse cx="75" cy="62" rx="7" ry="5" fill="#38bdf8" stroke="#0369a1" stroke-width="1" transform="rotate(20 75 62)"/>
-
-        <!-- Eyes whites -->
-        <circle cx="37" cy="40" r="12" fill="#fff" stroke="#0369a1" stroke-width="1.5"/>
-        <circle cx="63" cy="40" r="12" fill="#fff" stroke="#0369a1" stroke-width="1.5"/>
-        <!-- Irises -->
-        <circle cx="37" cy="40" r="8" fill="url(#eyeGrad0)"/>
-        <circle cx="63" cy="40" r="8" fill="url(#eyeGrad0)"/>
-        <!-- Pupils -->
-        <rect x="35" y="36" width="4" height="8" rx="2" fill="#0f172a"/>
-        <rect x="61" y="36" width="4" height="8" rx="2" fill="#0f172a"/>
-        <!-- Eye shine -->
-        <circle cx="33" cy="37" r="2" fill="#fff" opacity="0.8"/>
-        <circle cx="59" cy="37" r="2" fill="#fff" opacity="0.8"/>
-
-        <!-- Nose dots -->
-        <circle cx="47" cy="50" r="2" fill="#0369a1" opacity="0.5"/>
-        <circle cx="53" cy="50" r="2" fill="#0369a1" opacity="0.5"/>
-
-        <!-- Smile -->
-        <path d="M 43 54 Q 50 60 57 54" fill="none" stroke="#0369a1" stroke-width="1.5" stroke-linecap="round"/>
-
-        <!-- Bubble frill front details -->
-        <circle cx="28" cy="72" r="6" fill="#fff" opacity="0.5"/>
-        <circle cx="72" cy="72" r="6" fill="#fff" opacity="0.5"/>
-        <circle cx="50" cy="82" r="7" fill="#fff" opacity="0.4"/>
-      </svg>`;
-    } else if (stage === 1) {
-      // Frogadier — sleeker, darker blue, bubble scarf
-      return `<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="bodyGrad1" cx="35%" cy="30%" r="65%">
-            <stop offset="0%" stop-color="#3b82f6"/>
-            <stop offset="100%" stop-color="#1e3a8a"/>
-          </radialGradient>
-          <radialGradient id="eyeGrad1" cx="35%" cy="30%" r="60%">
-            <stop offset="0%" stop-color="#fde68a"/>
-            <stop offset="100%" stop-color="#b45309"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Shadow -->
-        <ellipse cx="50" cy="94" rx="18" ry="3.5" fill="#000" opacity="0.18"/>
-
-        <!-- Bubble scarf back -->
-        <circle cx="30" cy="67" r="13" fill="#dbeafe" opacity="0.85"/>
-        <circle cx="70" cy="67" r="13" fill="#dbeafe" opacity="0.85"/>
-        <circle cx="50" cy="75" r="14" fill="#eff6ff" opacity="0.9"/>
-
-        <!-- Dark mask / head -->
-        <ellipse cx="50" cy="40" rx="24" ry="20" fill="#1e3a8a"/>
-
-        <!-- Body -->
-        <ellipse cx="50" cy="58" rx="21" ry="19" fill="url(#bodyGrad1)" stroke="#1e40af" stroke-width="1.5"/>
-
-        <!-- Slim belly -->
-        <ellipse cx="50" cy="63" rx="11" ry="9" fill="#93c5fd" opacity="0.35"/>
-
-        <!-- Legs -->
-        <ellipse cx="37" cy="76" rx="8" ry="5" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="1" transform="rotate(10 37 76)"/>
-        <ellipse cx="63" cy="76" rx="8" ry="5" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="1" transform="rotate(-10 63 76)"/>
-
-        <!-- Arms -->
-        <ellipse cx="27" cy="57" rx="7" ry="4.5" fill="#2563eb" stroke="#1e3a8a" stroke-width="1" transform="rotate(-25 27 57)"/>
-        <ellipse cx="73" cy="57" rx="7" ry="4.5" fill="#2563eb" stroke="#1e3a8a" stroke-width="1" transform="rotate(25 73 57)"/>
-
-        <!-- Eyes whites -->
-        <circle cx="37" cy="36" r="11" fill="#fff" stroke="#1e3a8a" stroke-width="1.5"/>
-        <circle cx="63" cy="36" r="11" fill="#fff" stroke="#1e3a8a" stroke-width="1.5"/>
-        <!-- Irises -->
-        <circle cx="37" cy="36" r="7.5" fill="url(#eyeGrad1)"/>
-        <circle cx="63" cy="36" r="7.5" fill="url(#eyeGrad1)"/>
-        <!-- Slit pupils -->
-        <rect x="35.5" y="32" width="3" height="8" rx="1.5" fill="#0f172a"/>
-        <rect x="61.5" y="32" width="3" height="8" rx="1.5" fill="#0f172a"/>
-        <!-- Eye shine -->
-        <circle cx="34" cy="33" r="1.8" fill="#fff" opacity="0.8"/>
-        <circle cx="60" cy="33" r="1.8" fill="#fff" opacity="0.8"/>
-
-        <!-- Frogadier smirk -->
-        <path d="M 44 48 Q 50 52 56 48" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round"/>
-
-        <!-- Bubble scarf front highlights -->
-        <circle cx="30" cy="67" r="5.5" fill="#fff" opacity="0.45"/>
-        <circle cx="70" cy="67" r="5.5" fill="#fff" opacity="0.45"/>
-        <circle cx="50" cy="77" r="6" fill="#fff" opacity="0.4"/>
-        <circle cx="40" cy="73" r="4" fill="#fff" opacity="0.35"/>
-        <circle cx="60" cy="73" r="4" fill="#fff" opacity="0.35"/>
-      </svg>`;
-    } else {
-      // Greninja — dark ninja, pink tongue scarf, cyan accents
-      return `<svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="bodyGrad2" cx="30%" cy="25%" r="65%">
-            <stop offset="0%" stop-color="#1e1b4b"/>
-            <stop offset="100%" stop-color="#05070f"/>
-          </radialGradient>
-          <radialGradient id="scarfGrad" cx="50%" cy="30%" r="70%">
-            <stop offset="0%" stop-color="#fb7185"/>
-            <stop offset="100%" stop-color="#be123c"/>
-          </radialGradient>
-          <filter id="neonGlow">
-            <feGaussianBlur stdDeviation="1.5" result="blur"/>
-            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-          </filter>
-        </defs>
-
-        <!-- Shadow -->
-        <ellipse cx="50" cy="94" rx="16" ry="3" fill="#000" opacity="0.25"/>
-
-        <!-- Tongue/scarf wrap — goes behind body -->
-        <path d="M 22 62 C 10 55 8 78 22 84 C 36 90 64 90 78 84 C 92 78 90 55 78 62 C 72 52 64 48 50 50 C 36 48 28 52 22 62 Z"
-              fill="url(#scarfGrad)" opacity="0.92"/>
-
-        <!-- Ninja ear protrusions -->
-        <polygon points="24,20 42,34 32,10" fill="#0a0014" stroke="#00e5ff" stroke-width="1.2"/>
-        <polygon points="76,20 58,34 68,10" fill="#0a0014" stroke="#00e5ff" stroke-width="1.2"/>
-
-        <!-- Main ninja body -->
-        <ellipse cx="50" cy="52" rx="22" ry="21" fill="url(#bodyGrad2)" stroke="#3b0764" stroke-width="1.5"/>
-
-        <!-- Cyan body stripe -->
-        <ellipse cx="50" cy="58" rx="10" ry="8" fill="#00e5ff" opacity="0.07"/>
-
-        <!-- Shoulder bubbles (white dots) -->
-        <circle cx="30" cy="55" r="5.5" fill="#f8fafc" stroke="#0a0014" stroke-width="1"/>
-        <circle cx="70" cy="55" r="5.5" fill="#f8fafc" stroke="#0a0014" stroke-width="1"/>
-
-        <!-- Legs -->
-        <ellipse cx="38" cy="73" rx="8" ry="5.5" fill="#0a0014" stroke="#3b0764" stroke-width="1" transform="rotate(15 38 73)"/>
-        <ellipse cx="62" cy="73" rx="8" ry="5.5" fill="#0a0014" stroke="#3b0764" stroke-width="1" transform="rotate(-15 62 73)"/>
-
-        <!-- Head dark -->
-        <ellipse cx="50" cy="34" rx="21" ry="18" fill="#0a0014"/>
-
-        <!-- Top head spike (pink) -->
-        <polygon points="50,16 44,30 56,30" fill="#fb7185"/>
-
-        <!-- Cyan headband -->
-        <rect x="29" y="28" width="42" height="5" rx="2.5" fill="#00e5ff" opacity="0.15"/>
-
-        <!-- Eyes whites -->
-        <ellipse cx="37" cy="32" rx="9" ry="7" fill="#fff"/>
-        <ellipse cx="63" cy="32" rx="9" ry="7" fill="#fff"/>
-        <!-- Irises — sharp ninja -->
-        <ellipse cx="37" cy="32" rx="6" ry="5.5" fill="#fbbf24"/>
-        <ellipse cx="63" cy="32" rx="6" ry="5.5" fill="#fbbf24"/>
-        <!-- Vertical slit pupils -->
-        <rect x="35.5" y="28" width="3" height="8" rx="1.5" fill="#0a0014"/>
-        <rect x="61.5" y="28" width="3" height="8" rx="1.5" fill="#0a0014"/>
-        <!-- Cyan eye glow -->
-        <ellipse cx="37" cy="32" rx="9" ry="7" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" filter="url(#neonGlow)"/>
-        <ellipse cx="63" cy="32" rx="9" ry="7" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5" filter="url(#neonGlow)"/>
-        <!-- Eye shine -->
-        <circle cx="34" cy="30" r="1.8" fill="#fff" opacity="0.9"/>
-        <circle cx="60" cy="30" r="1.8" fill="#fff" opacity="0.9"/>
-
-        <!-- Ninja face mask line -->
-        <path d="M 29 40 Q 50 44 71 40" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-linecap="round"/>
-
-        <!-- Chest star -->
-        <polygon points="50,46 52,51 57,51 53,54 55,59 50,56 45,59 47,54 43,51 48,51"
-                 fill="#fbbf24" opacity="0.8"/>
-
-        <!-- Scarf highlights -->
-        <path d="M 28 68 Q 50 72 72 68" fill="none" stroke="#fda4af" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
-      </svg>`;
-    }
-  }
 }
